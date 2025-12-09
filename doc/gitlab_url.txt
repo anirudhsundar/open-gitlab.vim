@@ -1,0 +1,84 @@
+*gitlab_url.txt*      Generate GitLab URLs from Vim
+
+Author:  Anirudh Sundar Subramaniam <anirudh.sundar@gmail.com>
+License: MIT
+
+==============================================================================
+INTRODUCTION                                                *gitlab_url-intro*
+
+The |gitlab_url| plugin adds a single command, |:GitLabURL|, which prints a
+GitLab `blob` URL for the current buffer and line range.
+
+The plugin:
+
+- Detects the repository root using `git rev-parse`.
+- Determines the remote (preferring the branch upstream, then `origin`).
+- Supports HTTPS and SSH Git remotes pointing at any GitLab instance.
+- Uses the current branch name when available, otherwise the current commit.
+- Computes the repository-relative path of the current buffer.
+- Prints a URL like:
+
+  https://gitlab.com/group/project/-/blob/main/path/to/file.py#L10-20
+
+==============================================================================
+COMMANDS                                                 *gitlab_url-commands*
+
+                                                          *:GitLabURL*
+:GitLabURL
+    In normal mode, prints a GitLab URL for the current buffer and cursor
+    line, including an anchor like `#L42`.
+
+:'<,'>GitLabURL
+    In visual mode, prints a GitLab URL for the selected range, including an
+    anchor like `#L10-20`.
+
+In both cases, the URL is echoed to the command line so it can be copied or
+used by other plugins.
+
+==============================================================================
+INSTALLATION                                             *gitlab_url-install*
+
+Using vim-plug:
+
+>vim
+    Plug 'anirudhsundar/open-gitlab.vim'
+<
+
+Then run:
+
+>vim
+    :PlugInstall
+<
+
+Using Vim packages:
+
+>sh
+    git clone https://gitlab.com/anirudhsundar/open-gitlab.vim \
+      ~/.vim/pack/plugins/start/open-gitlab.vim
+<
+
+Generate help tags once:
+
+>vim
+    :helptags ~/.vim/pack/plugins/start/open-gitlab.vim/doc
+<
+
+==============================================================================
+CONFIGURATION                                           *gitlab_url-config*
+
+The plugin does not require configuration to work.
+
+It will:
+
+- Use the current branch name when available, e.g. `main` or `feature/x`.
+- Fall back to the current commit hash if HEAD is detached.
+- Prefer the branch upstream remote, then fall back to `origin`.
+
+==============================================================================
+INDEX                                                       *gitlab_url-index*
+
+  :GitLabURL.......................................|:GitLabURL|
+
+==============================================================================
+vim:tw=78:ft=help
+
